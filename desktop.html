@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <title>Honey OS</title>
+  <style>
+    body {
+      background-color: black;
+      margin: 0;
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+      min-height: 100vh;
+      padding: 40px;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+
+    /* body::after {
+      content: "";
+      background-image: url('img/Group 25.png');
+      background-repeat: no-repeat;
+      background-position: right center;
+      background-size: 60%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+    }  */
+
+
+    .logo {
+      max-width: 100%;
+      max-height: 200px;
+      margin-bottom: 30px;
+    }
+
+    /*     
+    .icon1 {
+      width: 55px;
+      height: auto;
+      position: relative;
+      top: -480px;
+      left: 18px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .icon2 {
+      width: 80px;
+      height: 55px;
+      position: relative;
+      top: -490px;
+      left: 128px;
+    }
+
+    .icon3 {
+      width: 55px;
+      height: auto;
+      position: relative;
+      top: -480px;
+      left: 235px;
+    }
+
+    .icon4 {
+      width: 55px;
+      height: auto;
+      position: relative;
+      top: -480px;
+      left: 355px;
+    }
+ */
+
+    .hexagon-container {
+      position: absolute;
+      top: 24%;
+      /* Adjust this value to move the hexagons up or down */
+      right: 9%;
+      /* Adjust this value to move the hexagons left or right */
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1;
+    }
+
+    .hexagon {
+      width: 100px;
+      height: 115px;
+      background-color: #ffc700;
+      margin: 0 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      border-radius: 20px;
+    }
+
+    .icon {
+      width: 50px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    .textEditorIcon {
+      width: 50px;
+      height: auto;
+    }
+
+    .fileManagerIcon {
+      width: auto;
+      height: 60px;
+    }
+
+    .hexagon-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 43px;
+      border-radius: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hexagon-label {
+      color: #ffc700;
+      font-family: sans-serif;
+      font-size: 14px;
+      margin-top: 10px;
+      /* Adjust the negative margin to remove space */
+      text-align: center;
+    }
+
+    .text-editor-container {
+      display: none;
+      flex-direction: column;
+      background-color: rgb(87, 74, 0);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      z-index: 3;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      cursor: move;
+    }
+
+    .text-editor-container textarea {
+      width: 600px;
+      height: 400px;
+      resize: none;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      overflow: auto;
+      caret-color: black;
+      /* Color of the text cursor */
+      outline: 2px solid #ffc700;
+      /* Border style when focused */
+    }
+
+    .buttonContainer {
+      display: flex;
+      margin-bottom: 20px;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .newFileIcon {
+      height: 30px;
+    }
+
+    .openFileIcon {
+      width: 35px;
+    }
+
+    .saveIcon {
+      height: 30px;
+    }
+
+    .closeIcon {
+      height: 30px;
+    }
+
+    .buttonWrapper {
+      text-align: center;
+    }
+
+
+    .buttonWrapper span {
+      display: block;
+      font-size: 14px;
+      color: #ccc;
+      margin-top: 5px;
+      /* Adjust as needed */
+    }
+  </style>
+</head>
+
+<body>
+  <img src="img/Group 19.png" alt="Honey OS Logo" class="logo">
+  <div class="hexagon-container">
+    <div class="hexagon-wrapper" id="textEditorHexagon">
+      <div class="hexagon"><img src="img/Text Editor.png" alt="Text Editor" class="textEditorIcon"></div>
+      <div class="hexagon-label">Text Editor</div>
+    </div>
+    <div class="hexagon-wrapper">
+      <div class="hexagon"><img src="img/File Manager.png" alt="File Manager" class="fileManagerIcon"></div>
+      <div class="hexagon-label">File Manager</div>
+    </div>
+  </div>
+
+  <div class="text-editor-container" id="textEditorContainer">
+    <div class="buttonContainer">
+      <div class="buttonWrapper">
+        <img class="newFileIcon" src="New File.png" alt="New File" onclick="newFile()">
+        <span>New File</span>
+      </div>
+      <div class="buttonWrapper">
+        <img class="openFileIcon" src="Open File.png" alt="Open File" onclick="openFile()">
+        <span>Open File</span>
+      </div>
+      <div class="buttonWrapper">
+        <img class="saveIcon" src="Save File.png" alt="Save" onclick="saveText()">
+        <span>Save</span>
+      </div>
+      <div class="buttonWrapper">
+        <img class="closeIcon" src="Close File.png" alt="Close" onclick="closeTextEditor()">
+        <span>Close</span>
+      </div>
+    </div>
+    <textarea id="textArea"></textarea>
+  </div>
+
+
+  <script>
+    var isDragging = false;
+    var initialX;
+    var initialY;
+
+    // Function to handle mouse down event
+    function handleMouseDown(e) {
+      isDragging = true;
+      initialX = e.clientX;
+      initialY = e.clientY;
+    }
+
+    // Function to handle mouse move event
+    function handleMouseMove(e) {
+      if (!isDragging) return;
+
+      var dx = e.clientX - initialX;
+      var dy = e.clientY - initialY;
+
+      var textEditorContainer = document.getElementById("textEditorContainer");
+      textEditorContainer.style.top = textEditorContainer.offsetTop + dy + "px";
+      textEditorContainer.style.left = textEditorContainer.offsetLeft + dx + "px";
+
+      initialX = e.clientX;
+      initialY = e.clientY;
+    }
+
+    // Function to handle mouse up event
+    function handleMouseUp() {
+      isDragging = false;
+    }
+
+    // Attach event listeners
+    var textEditorContainer = document.getElementById("textEditorContainer");
+    textEditorContainer.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+
+    // Function to focus the text area when clicked
+    function focusTextArea() {
+      var textArea = document.getElementById("textArea");
+      textArea.focus();
+    }
+
+    // Function to blur the text area when clicked outside of it
+    function blurTextArea(e) {
+      var textArea = document.getElementById("textArea");
+      if (!textArea.contains(e.target)) {
+        textArea.blur();
+      }
+    }
+
+    // Attach click event listener to the document to blur the text area when clicked outside of it
+    document.addEventListener("click", blurTextArea);
+
+
+
+
+
+
+
+
+    function newFile() {
+
+    }
+
+    function openFile() {
+
+    }
+    function openTextEditor() {
+      document.getElementById("textEditorContainer").style.display = "flex";
+    }
+
+    function closeTextEditor() {
+      document.getElementById("textEditorContainer").style.display = "none";
+    }
+
+    function saveText() {
+      var text = document.getElementById("textArea").value;
+      // Here you can implement saving text functionality
+      alert("Text Saved: " + text);
+    }
+
+    document.getElementById("textEditorHexagon").addEventListener("dblclick", function () {
+      openTextEditor();
+    });
+  </script>
+</body>
+
+</html>
